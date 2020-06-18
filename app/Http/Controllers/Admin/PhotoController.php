@@ -110,19 +110,8 @@ class PhotoController extends Controller
         $photo->save();
 
         $idPhoto = $photo->id;
-
-        $descrip = Photo_description::where('photo_id','=',$idPhoto)->get();
-        // $descrip->photo_id = $idPhoto;
-        $descrip->content = $descriptionEdit;
-        $descrip->save();
-
-        // foreach($tagsEdit as $tag){
-        //     $taggable = Taggable::find($id);
-        //     $taggable->tag_id = $tag;
-        //     $taggable->photo_id = $id;
-        //     $taggable->save();
-        // }
-
+        DB::table('photo_descriptions')->where('photo_id', $idPhoto)->update(
+            ['photo_id'=>$idPhoto,'content'=>$descriptionEdit]);
         return redirect('admin/photos');
     }
 }
